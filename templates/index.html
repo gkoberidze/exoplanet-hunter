@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exoplanet Hunter AI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 2.5em;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      button {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        display: none;
+      }
+
+      .result.show {
+        display: block;
+        animation: slideIn 0.5s;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .result h2 {
+        color: #667eea;
+        margin-bottom: 15px;
+      }
+
+      .result p {
+        margin: 10px 0;
+        font-size: 16px;
+      }
+
+      .loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .loading.show {
+        display: block;
+      }
+
+      .info-box {
+        background: #e8f4f8;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔭 Exoplanet Hunter AI</h1>
+      <p class="subtitle">Discover new worlds using machine learning</p>
+
+      <div class="info-box">
+        <strong>How to use:</strong> Enter the planetary and stellar parameters
+        below. The AI will predict whether this is a confirmed exoplanet or a
+        false positive.
+      </div>
+
+      <form id="predictionForm">
+        {% for feature in features %}
+        <div class="form-group">
+          <label for="{{ feature }}"
+            >{{ feature.replace('_', ' ').title() }}:</label
+          >
+          <input
+            type="number"
+            step="any"
+            id="{{ feature }}"
+            name="{{ feature }}"
+            required
+            placeholder="Enter value"
+          />
+        </div>
+        {% endfor %}
+
+        <button type="submit">🚀 Analyze Data</button>
+      </form>
+
+      <div class="loading" id="loading">
+        <p>Analyzing data... 🔄</p>
+      </div>
+
+      <div class="result" id="result">
+        <h2>Analysis Result</h2>
+        <p><strong>Prediction:</strong> <span id="prediction"></span></p>
+        <p><strong>Confidence:</strong> <span id="confidence"></span></p>
+        <p>
+          <strong>Probability of False Positive:</strong>
+          <span id="prob_false"></span>
+        </p>
+        <p>
+          <strong>Probability of Confirmed Exoplanet:</strong>
+          <span id="prob_confirmed"></span>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("predictionForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Show loading
+          document.getElementById("loading").classList.add("show");
+          document.getElementById("result").classList.remove("show");
+
+          // Get form data
+          const formData = new FormData(this);
+
+          try {
+            // Send prediction request
+            const response = await fetch("/predict", {
+              method: "POST",
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            // Hide loading
+            document.getElementById("loading").classList.remove("show");
+
+            if (data.error) {
+              alert("Error: " + data.error);
+              return;
+            }
+
+            // Show results
+            document.getElementById("prediction").textContent = data.prediction;
+            document.getElementById("confidence").textContent = data.confidence;
+            document.getElementById("prob_false").textContent =
+              data.probability_false;
+            document.getElementById("prob_confirmed").textContent =
+              data.probability_confirmed;
+            document.getElementById("result").classList.add("show");
+          } catch (error) {
+            document.getElementById("loading").classList.remove("show");
+            alert("Error making prediction: " + error);
+          }
+        });
+    </script>
+  </body>
+</html>
