@@ -10,9 +10,9 @@ Benefits:
 
 Machine Learning Libraries:
 
-scikit-learn (Random Forest, Neural Network)
-XGBoost (Gradient Boosting)
-TensorFlow (Deep Learning)
-pandas & NumPy (Data Processing)
+1. scikit-learn (Random Forest, Neural Network)
+2. XGBoost (Gradient Boosting)
+3. TensorFlow (Deep Learning)
+4. pandas & NumPy (Data Processing)
 
 This project demonstrates how modern machine learning can be applied to real astronomical challenges, making cutting-edge technology accessible and useful for the scientific community while maintaining transparency and educational value.
