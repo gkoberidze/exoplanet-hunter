@@ -2,11 +2,11 @@ This project is an AI-powered exoplanet detection system that analyzes NASA Kepl
 
 Benefits:
 
-High Accuracy: Achieves 87-89% accuracy in classifying exoplanets, helping researchers prioritize which candidates warrant follow-up observations
-Time Efficiency: Analyzes hundreds of candidates in seconds, dramatically reducing manual analysis time
-Educational Value: Provides detailed insights about planetary characteristics, comparisons to our solar system, and explanations of features
-Accessibility: Makes advanced ML analysis available through a simple web interface requiring no coding knowledge
-Transparency: Shows feature importance and confidence scores, allowing scientists to understand the reasoning behind classifications
+1) High Accuracy: Achieves 87-89% accuracy in classifying exoplanets, helping researchers prioritize which candidates warrant follow-up observations.
+2) Time Efficiency: Analyzes hundreds of candidates in seconds, dramatically reducing manual analysis time.
+3) Educational Value: Provides detailed insights about planetary characteristics, comparisons to our solar system, and explanations of features.
+4) Accessibility: Makes advanced ML analysis available through a simple web interface requiring no coding knowledge.
+5) Transparency: Shows feature importance and confidence scores, allowing scientists to understand the reasoning behind classifications.
 
 Machine Learning Libraries:
 
