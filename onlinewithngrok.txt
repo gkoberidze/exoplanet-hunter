@@ -1,7 +1,0 @@
-MAKING URL FROM LOCAL HOST USING NGROK:
-
-Run py app.py in terminal
-Open Command Prompt as Administrator and write next step
-ngrok config add-authtoken 33cPpRHFpxFdjFUUmEJVFRXa6x8_3gmXhhZDDt3SfFNzBgeKF
-ngrok http 5000    -   THIS IN CMD ALSO
-The URL is already ready with the QR code uploaded.
