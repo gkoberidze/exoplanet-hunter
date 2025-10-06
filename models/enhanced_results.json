@@ -1,0 +1,14 @@
+{
+    "Random Forest Enhanced": {
+        "test_accuracy": 0.9788679245283018,
+        "roc_auc": 0.9978628560143323
+    },
+    "XGBoost Enhanced": {
+        "test_accuracy": 0.9811320754716981,
+        "roc_auc": 0.9977594079006146
+    },
+    "Neural Network Enhanced": {
+        "test_accuracy": 0.9675471698113207,
+        "roc_auc": 0.993637941006362
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "Random Forest": {
+        "train_accuracy": 0.9883959044368601,
+        "test_accuracy": 0.8724420190995907,
+        "roc_auc": 0.9550784314893939,
+        "confusion_matrix": [
+            [
+                808,
+                109
+            ],
+            [
+                78,
+                471
+            ]
+        ]
+    },
+    "XGBoost": {
+        "train_accuracy": 1.0,
+        "test_accuracy": 0.8765347885402456,
+        "roc_auc": 0.9554558402011787,
+        "confusion_matrix": [
+            [
+                809,
+                108
+            ],
+            [
+                73,
+                476
+            ]
+        ]
+    },
+    "Neural Network": {
+        "train_accuracy": 0.8808873720136519,
+        "test_accuracy": 0.8649386084583902,
+        "roc_auc": 0.9380513395029725,
+        "confusion_matrix": [
+            [
+                813,
+                104
+            ],
+            [
+                94,
+                455
+            ]
+        ]
+    }
+}

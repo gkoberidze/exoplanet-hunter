@@ -3,8 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exoplanet Hunter AI</title>
+    <title>Exoplanet Hunter AI - Advanced NASA Challenge</title>
     <style>
+      :root {
+        --primary: #667eea;
+        --secondary: #764ba2;
+        --success: #28a745;
+        --danger: #dc3545;
+        --light: #f8f9fa;
+        --dark: #1a1a2e;
+        --bg: white;
+        --text: #333;
+        --card-bg: white;
+      }
+
+      [data-theme="dark"] {
+        --bg: #0f0f1e;
+        --text: #e0e0e0;
+        --card-bg: #1a1a2e;
+        --light: #2a2a3e;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -13,96 +32,31 @@
 
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
         min-height: 100vh;
         padding: 20px;
+        color: var(--text);
+        transition: all 0.3s ease;
       }
 
       .container {
-        max-width: 800px;
+        max-width: 1400px;
         margin: 0 auto;
-        background: white;
+        background: var(--card-bg);
         padding: 40px;
         border-radius: 20px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 0.6s ease;
       }
 
-      h1 {
-        color: #667eea;
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 2.5em;
-      }
-
-      .subtitle {
-        text-align: center;
-        color: #666;
-        margin-bottom: 30px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-        font-weight: 600;
-      }
-
-      input[type="number"] {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: border-color 0.3s;
-      }
-
-      input[type="number"]:focus {
-        outline: none;
-        border-color: #667eea;
-      }
-
-      button {
-        width: 100%;
-        padding: 15px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-
-      button:hover {
-        transform: translateY(-2px);
-      }
-
-      button:active {
-        transform: translateY(0);
-      }
-
-      .result {
-        margin-top: 30px;
-        padding: 20px;
-        background: #f5f5f5;
-        border-radius: 10px;
-        display: none;
-      }
-
-      .result.show {
-        display: block;
-        animation: slideIn 0.5s;
-      }
-
-      @keyframes slideIn {
+      @keyframes fadeInUp {
         from {
           opacity: 0;
-          transform: translateY(-20px);
+          transform: translateY(30px);
         }
         to {
           opacity: 1;
@@ -110,14 +64,406 @@
         }
       }
 
-      .result h2 {
-        color: #667eea;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        color: var(--primary);
+        font-size: 2.5em;
+        animation: fadeIn 0.8s;
+        margin-bottom: 10px;
+      }
+
+      .theme-toggle {
+        padding: 10px 20px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .subtitle {
+        text-align: center;
+        color: var(--text);
+        margin-bottom: 30px;
+        font-size: 1.1em;
+        opacity: 0.8;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--light);
+        flex-wrap: wrap;
+        overflow-x: auto;
+      }
+
+      .tab {
+        padding: 12px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        white-space: nowrap;
+      }
+
+      .tab:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+        animation: slideIn 0.4s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .model-selector {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: var(--light);
+        border-radius: 8px;
+      }
+
+      .model-selector label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .model-selector select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
+        font-size: 16px;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .info-box {
+        background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f7 100%);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px) scale(1.02);
+      }
+
+      .stat-card h3 {
+        font-size: 14px;
+        margin-bottom: 10px;
+        opacity: 0.9;
+      }
+
+      .stat-card .value {
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 0;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input[type="number"],
+      input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      input[type="number"]:focus,
+      input[type="file"]:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .upload-section {
+        background: var(--light);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+      }
+
+      .upload-section h3 {
+        color: var(--primary);
         margin-bottom: 15px;
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 25px;
+        background: var(--light);
+        border-radius: 12px;
+        display: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .result.show {
+        display: block;
+        animation: slideIn 0.5s;
+      }
+
+      .result h2 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 24px;
       }
 
       .result p {
         margin: 10px 0;
         font-size: 16px;
+      }
+
+      .insights-section {
+        margin-top: 20px;
+        padding: 20px;
+        background: var(--bg);
+        border-radius: 8px;
+        border-left: 4px solid var(--primary);
+      }
+
+      .insights-section h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+      }
+
+      .insights-section ul {
+        list-style-position: inside;
+        line-height: 1.8;
+      }
+
+      .batch-results {
+        margin-top: 20px;
+      }
+
+      .batch-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .summary-item {
+        background: var(--bg);
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .summary-item:hover {
+        transform: scale(1.05);
+      }
+
+      .summary-item .label {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-bottom: 5px;
+      }
+
+      .summary-item .value {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--primary);
+      }
+
+      .results-table {
+        max-height: 400px;
+        overflow-y: auto;
+        background: var(--bg);
+        border-radius: 8px;
+        padding: 15px;
+      }
+
+      .results-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .results-table th {
+        background: var(--primary);
+        color: white;
+        padding: 10px;
+        text-align: left;
+        position: sticky;
+        top: 0;
+      }
+
+      .results-table td {
+        padding: 8px;
+        border-bottom: 1px solid var(--light);
+      }
+
+      .results-table tr:hover {
+        background: var(--light);
+      }
+
+      .exoplanet {
+        color: var(--success);
+        font-weight: bold;
+      }
+
+      .false-positive {
+        color: var(--danger);
+        font-weight: bold;
+      }
+
+      .feature-importance {
+        margin-top: 20px;
+        padding: 15px;
+        background: var(--bg);
+        border-radius: 8px;
+      }
+
+      .feature-importance h3 {
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .importance-bar {
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .importance-label {
+        width: 200px;
+        font-size: 14px;
+      }
+
+      .importance-value {
+        flex: 1;
+        height: 25px;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        transition: width 0.5s ease;
       }
 
       .loading {
@@ -130,80 +476,547 @@
         display: block;
       }
 
-      .info-box {
-        background: #e8f4f8;
-        padding: 15px;
+      .spinner {
+        border: 4px solid var(--light);
+        border-top: 4px solid var(--primary);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .visualization-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .viz-card {
+        background: var(--bg);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .viz-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .viz-card h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      .viz-card img {
+        width: 100%;
         border-radius: 8px;
-        margin-bottom: 20px;
-        border-left: 4px solid #667eea;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .download-btn,
+      .action-btn {
+        background: var(--success);
+        margin-top: 15px;
+      }
+
+      .download-btn:hover,
+      .action-btn:hover {
+        background: #218838;
+      }
+
+      .danger-btn {
+        background: var(--danger);
+      }
+
+      .danger-btn:hover {
+        background: #c82333;
+      }
+
+      .history-item {
+        background: var(--bg);
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary);
+        transition: all 0.3s;
+      }
+
+      .history-item:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(5px);
+      }
+
+      .history-item .timestamp {
+        font-size: 12px;
+        opacity: 0.7;
+        margin-bottom: 5px;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .button-group button {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .visualization-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs {
+          overflow-x: auto;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+
+        .button-group button {
+          width: 100%;
+        }
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      .badge-success {
+        background: var(--success);
+        color: white;
+      }
+
+      .badge-danger {
+        background: var(--danger);
+        color: white;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>🔭 Exoplanet Hunter AI</h1>
-      <p class="subtitle">Discover new worlds using machine learning</p>
-
-      <div class="info-box">
-        <strong>How to use:</strong> Enter the planetary and stellar parameters
-        below. The AI will predict whether this is a confirmed exoplanet or a
-        false positive.
-      </div>
-
-      <form id="predictionForm">
-        {% for feature in features %}
-        <div class="form-group">
-          <label for="{{ feature }}"
-            >{{ feature.replace('_', ' ').title() }}:</label
-          >
-          <input
-            type="number"
-            step="any"
-            id="{{ feature }}"
-            name="{{ feature }}"
-            required
-            placeholder="Enter value"
-          />
+      <div class="header">
+        <div>
+          <h1>🔭 Exoplanet Hunter AI</h1>
+          <p class="subtitle">
+            NASA Space Apps Challenge 2025 - Advanced ML Solution
+          </p>
         </div>
-        {% endfor %}
-
-        <button type="submit">🚀 Analyze Data</button>
-      </form>
-
-      <div class="loading" id="loading">
-        <p>Analyzing data... 🔄</p>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          🌓 Toggle Dark Mode
+        </button>
       </div>
 
-      <div class="result" id="result">
-        <h2>Analysis Result</h2>
-        <p><strong>Prediction:</strong> <span id="prediction"></span></p>
-        <p><strong>Confidence:</strong> <span id="confidence"></span></p>
-        <p>
-          <strong>Probability of False Positive:</strong>
-          <span id="prob_false"></span>
-        </p>
-        <p>
-          <strong>Probability of Confirmed Exoplanet:</strong>
-          <span id="prob_confirmed"></span>
-        </p>
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('predict')">
+          🚀 Single Prediction
+        </button>
+        <button class="tab" onclick="switchTab('batch')">
+          📂 Batch Upload
+        </button>
+        <button class="tab" onclick="switchTab('history')">📜 History</button>
+        <button class="tab" onclick="switchTab('visualizations')">
+          📊 Performance
+        </button>
+        <button class="tab" onclick="switchTab('about')">ℹ️ About</button>
+      </div>
+
+      <!-- Single Prediction Tab -->
+      <div id="predict" class="tab-content active">
+        <div class="stats-grid">
+          {% for model_name, metrics in model_results.items() %}
+          <div class="stat-card">
+            <h3>{{ model_name }}</h3>
+            <div class="value">
+              {{ "%.2f"|format(metrics.test_accuracy * 100) }}%
+            </div>
+            <small>Test Accuracy</small>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="info-box">
+          <strong>🎯 How to use:</strong> Select a model, enter the planetary
+          and stellar parameters, and click "Analyze Data" to predict if this is
+          a confirmed exoplanet or false positive.
+        </div>
+
+        <div class="model-selector">
+          <label for="modelSelect">🤖 Select AI Model:</label>
+          <select id="modelSelect" name="model">
+            {% for model in models %}
+            <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <form id="predictionForm">
+          <div class="form-grid">
+            {% for feature in features %}
+            <div class="form-group">
+              <label for="{{ feature }}"
+                >{{ feature.replace('_', ' ').title() }}:</label
+              >
+              <input
+                type="number"
+                step="any"
+                id="{{ feature }}"
+                name="{{ feature }}"
+                required
+                placeholder="Enter value"
+              />
+            </div>
+            {% endfor %}
+          </div>
+
+          <button type="submit">🚀 Analyze Data</button>
+        </form>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Analyzing data with AI models...</p>
+        </div>
+
+        <div class="result" id="result">
+          <h2>🎯 Analysis Result</h2>
+          <p>
+            <strong>Prediction:</strong>
+            <span id="prediction" style="font-size: 20px"></span>
+          </p>
+          <p><strong>Model Used:</strong> <span id="model_used"></span></p>
+          <p><strong>Confidence:</strong> <span id="confidence"></span></p>
+          <p>
+            <strong>Probability of False Positive:</strong>
+            <span id="prob_false"></span>
+          </p>
+          <p>
+            <strong>Probability of Confirmed Exoplanet:</strong>
+            <span id="prob_confirmed"></span>
+          </p>
+
+          <div class="insights-section" id="insightsSection">
+            <h3>🔍 Detailed Insights</h3>
+            <div id="insightsContent"></div>
+          </div>
+
+          <div
+            class="feature-importance"
+            id="featureImportance"
+            style="display: none"
+          >
+            <h3>📊 Top 5 Most Important Features</h3>
+            <div id="importanceBars"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="action-btn" onclick="saveCurrentPrediction()">
+              💾 Save as JSON
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch Upload Tab -->
+      <div id="batch" class="tab-content">
+        <div class="info-box">
+          <strong>📂 Batch Analysis:</strong> Upload a CSV file with multiple
+          exoplanet candidates. The file must contain columns for all required
+          features.
+        </div>
+
+        <div class="upload-section">
+          <h3>Upload CSV File</h3>
+
+          <div class="model-selector">
+            <label for="batchModelSelect">🤖 Select AI Model:</label>
+            <select id="batchModelSelect" name="model">
+              {% for model in models %}
+              <option value="{{ model }}">{{ model }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <form id="uploadForm">
+            <div class="form-group">
+              <label for="csvFile">Choose CSV File:</label>
+              <input
+                type="file"
+                id="csvFile"
+                name="file"
+                accept=".csv"
+                required
+              />
+            </div>
+            <button type="submit">📊 Analyze Batch</button>
+          </form>
+
+          <div
+            style="
+              margin-top: 15px;
+              padding: 10px;
+              background: var(--bg);
+              border-radius: 8px;
+            "
+          >
+            <strong>Required columns:</strong>
+            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8">
+              {% for feature in features %}{{ feature }}{% if not loop.last %},
+              {% endif %}{% endfor %}
+            </p>
+          </div>
+        </div>
+
+        <div class="loading" id="batchLoading">
+          <div class="spinner"></div>
+          <p>Processing CSV file...</p>
+        </div>
+
+        <div class="result" id="batchResult">
+          <h2>📊 Batch Analysis Results</h2>
+          <p>
+            <strong>Model Used:</strong> <span id="batch_model_used"></span>
+          </p>
+
+          <div class="batch-summary">
+            <div class="summary-item">
+              <div class="label">Total Rows</div>
+              <div class="value" id="total_rows">0</div>
+            </div>
+            <div class="summary-item">
+              <div class="label">Analyzed</div>
+              <div class="value" id="analyzed_rows">0</div>
+            </div>
+            <div class="summary-item">
+              <div class="label">Confirmed</div>
+              <div class="value exoplanet" id="confirmed_count">0</div>
+            </div>
+            <div class="summary-item">
+              <div class="label">False Positives</div>
+              <div class="value false-positive" id="false_positive_count">
+                0
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="label">Avg Confidence</div>
+              <div class="value" id="avg_confidence">0%</div>
+            </div>
+          </div>
+
+          <button class="download-btn" onclick="downloadResults()">
+            📥 Download Results CSV
+          </button>
+
+          <div class="batch-results">
+            <h3 style="color: var(--primary); margin: 20px 0 10px 0">
+              Detailed Results
+            </h3>
+            <div class="results-table" id="resultsTable"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Tab -->
+      <div id="history" class="tab-content">
+        <div class="info-box">
+          <strong>📜 Prediction History:</strong> View your last 100
+          predictions. History is saved locally.
+        </div>
+
+        <div class="button-group">
+          <button class="action-btn" onclick="loadHistory()">
+            🔄 Refresh History
+          </button>
+          <button class="action-btn" onclick="exportHistory()">
+            📥 Export as CSV
+          </button>
+          <button class="danger-btn" onclick="clearHistoryConfirm()">
+            🗑️ Clear History
+          </button>
+        </div>
+
+        <div id="historyContent" style="margin-top: 30px">
+          <p style="text-align: center; opacity: 0.7">
+            Click "Refresh History" to load predictions
+          </p>
+        </div>
+      </div>
+
+      <!-- Visualizations Tab -->
+      <div id="visualizations" class="tab-content">
+        <h2 style="color: var(--primary); margin-bottom: 20px">
+          📊 Model Performance Visualizations
+        </h2>
+        <div class="visualization-grid">
+          {% for viz in visualizations %}
+          <div class="viz-card">
+            <h3>{{ viz.title }}</h3>
+            <img
+              src="{{ url_for('static', filename=viz.filename) }}"
+              alt="{{ viz.title }}"
+            />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- About Tab -->
+      <div id="about" class="tab-content">
+        <h2 style="color: var(--primary); margin-bottom: 20px">
+          ℹ️ About This Project
+        </h2>
+
+        <div class="info-box">
+          <h3 style="margin-bottom: 10px">🎯 Project Overview</h3>
+          <p>
+            This AI-powered exoplanet detection system uses advanced machine
+            learning to analyze NASA Kepler mission data and classify planetary
+            candidates as confirmed exoplanets or false positives. Built for
+            NASA Space Apps Challenge 2025.
+          </p>
+        </div>
+
+        <div class="viz-card" style="margin-top: 20px">
+          <h3>🤖 AI Models Used</h3>
+          <ul style="line-height: 1.8; margin-left: 20px">
+            <li>
+              <strong>Random Forest:</strong> Ensemble of decision trees for
+              robust classification
+            </li>
+            <li>
+              <strong>XGBoost:</strong> Gradient boosting algorithm optimized
+              for performance
+            </li>
+            <li>
+              <strong>Neural Network:</strong> Deep learning model with multiple
+              hidden layers
+            </li>
+          </ul>
+        </div>
+
+        <div class="viz-card" style="margin-top: 20px">
+          <h3>✨ Features & Capabilities</h3>
+          <ul style="line-height: 1.8; margin-left: 20px">
+            <li>✅ Single exoplanet prediction with detailed insights</li>
+            <li>✅ Batch CSV upload for analyzing multiple candidates</li>
+            <li>✅ Three advanced ML models to choose from</li>
+            <li>✅ Feature importance analysis for transparency</li>
+            <li>✅ Prediction history tracking</li>
+            <li>✅ Export results as CSV or JSON</li>
+            <li>✅ Dark mode support</li>
+            <li>✅ Mobile responsive design</li>
+          </ul>
+        </div>
+
+        <div class="viz-card" style="margin-top: 20px">
+          <h3>📊 Data Features ({{ features|length }} total)</h3>
+          <ul style="line-height: 1.8; margin-left: 20px; columns: 2">
+            {% for feature in features %}
+            <li>{{ feature.replace('_', ' ').title() }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="viz-card" style="margin-top: 20px">
+          <h3>🏆 Performance Summary</h3>
+          <p><strong>Total Models Trained:</strong> {{ models|length }}</p>
+          <p><strong>Total Features:</strong> {{ features|length }}</p>
+          <p>
+            <strong>Training Dataset:</strong> NASA Kepler Mission Data (7,326
+            samples)
+          </p>
+          <p>
+            <strong>Classification:</strong> Binary (Confirmed Exoplanet vs
+            False Positive)
+          </p>
+          <p><strong>Best Accuracy:</strong> 89%+</p>
+        </div>
       </div>
     </div>
 
     <script>
+      let batchResults = null;
+      let currentPrediction = null;
+
+      // Theme Toggle
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      // Load saved theme
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      });
+
+      function switchTab(tabName) {
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        document.querySelectorAll(".tab").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        document.getElementById(tabName).classList.add("active");
+        event.target.classList.add("active");
+
+        if (tabName === "history") {
+          loadHistory();
+        }
+      }
+
       document
         .getElementById("predictionForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          // Show loading
           document.getElementById("loading").classList.add("show");
           document.getElementById("result").classList.remove("show");
 
-          // Get form data
           const formData = new FormData(this);
+          const selectedModel = document.getElementById("modelSelect").value;
+          formData.append("model", selectedModel);
 
           try {
-            // Send prediction request
             const response = await fetch("/predict", {
               method: "POST",
               body: formData,
@@ -211,7 +1024,6 @@
 
             const data = await response.json();
 
-            // Hide loading
             document.getElementById("loading").classList.remove("show");
 
             if (data.error) {
@@ -219,19 +1031,315 @@
               return;
             }
 
-            // Show results
+            currentPrediction = data;
+
             document.getElementById("prediction").textContent = data.prediction;
+            document.getElementById("model_used").textContent = data.model_used;
             document.getElementById("confidence").textContent = data.confidence;
             document.getElementById("prob_false").textContent =
               data.probability_false;
             document.getElementById("prob_confirmed").textContent =
               data.probability_confirmed;
+
+            // Display insights
+            if (data.insights) {
+              let insightsHtml = "<ul>";
+              if (data.insights.key_indicators) {
+                data.insights.key_indicators.forEach((indicator) => {
+                  insightsHtml += `<li>${indicator}</li>`;
+                });
+              }
+              if (data.insights.recommendations) {
+                insightsHtml += "<br><strong>Recommendations:</strong><br>";
+                data.insights.recommendations.forEach((rec) => {
+                  insightsHtml += `<li>${rec}</li>`;
+                });
+              }
+              insightsHtml += "</ul>";
+
+              if (
+                data.solar_system_comparison &&
+                data.solar_system_comparison.length > 0
+              ) {
+                insightsHtml +=
+                  "<br><strong>Solar System Comparison:</strong><ul>";
+                data.solar_system_comparison.forEach((comp) => {
+                  insightsHtml += `<li>${comp}</li>`;
+                });
+                insightsHtml += "</ul>";
+              }
+
+              document.getElementById("insightsContent").innerHTML =
+                insightsHtml;
+            }
+
+            // Display feature importance
+            if (data.feature_importance) {
+              const importanceDiv =
+                document.getElementById("featureImportance");
+              const barsDiv = document.getElementById("importanceBars");
+              barsDiv.innerHTML = "";
+
+              const maxImportance = Math.max(
+                ...Object.values(data.feature_importance)
+              );
+
+              for (const [feature, importance] of Object.entries(
+                data.feature_importance
+              )) {
+                const barContainer = document.createElement("div");
+                barContainer.className = "importance-bar";
+
+                const label = document.createElement("div");
+                label.className = "importance-label";
+                label.textContent = feature
+                  .replace(/_/g, " ")
+                  .replace(/\b\w/g, (l) => l.toUpperCase());
+
+                const bar = document.createElement("div");
+                bar.className = "importance-value";
+                bar.style.width = `${(importance / maxImportance) * 100}%`;
+                bar.textContent = importance.toFixed(4);
+
+                barContainer.appendChild(label);
+                barContainer.appendChild(bar);
+                barsDiv.appendChild(barContainer);
+              }
+
+              importanceDiv.style.display = "block";
+            } else {
+              document.getElementById("featureImportance").style.display =
+                "none";
+            }
+
             document.getElementById("result").classList.add("show");
           } catch (error) {
             document.getElementById("loading").classList.remove("show");
             alert("Error making prediction: " + error);
           }
         });
+
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          document.getElementById("batchLoading").classList.add("show");
+          document.getElementById("batchResult").classList.remove("show");
+
+          const formData = new FormData(this);
+          const selectedModel =
+            document.getElementById("batchModelSelect").value;
+          formData.append("model", selectedModel);
+
+          try {
+            const response = await fetch("/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            document.getElementById("batchLoading").classList.remove("show");
+
+            if (data.error) {
+              alert("Error: " + data.error);
+              if (data.required_columns) {
+                alert("Required columns: " + data.required_columns.join(", "));
+              }
+              return;
+            }
+
+            batchResults = data;
+
+            document.getElementById("batch_model_used").textContent =
+              data.model_used;
+            document.getElementById("total_rows").textContent =
+              data.summary.total_rows;
+            document.getElementById("analyzed_rows").textContent =
+              data.summary.analyzed_rows;
+            document.getElementById("confirmed_count").textContent =
+              data.summary.confirmed_exoplanets;
+            document.getElementById("false_positive_count").textContent =
+              data.summary.false_positives;
+            document.getElementById("avg_confidence").textContent =
+              data.summary.average_confidence.toFixed(2) + "%";
+
+            const tableHtml = createResultsTable(data.results);
+            document.getElementById("resultsTable").innerHTML = tableHtml;
+
+            document.getElementById("batchResult").classList.add("show");
+          } catch (error) {
+            document.getElementById("batchLoading").classList.remove("show");
+            alert("Error processing file: " + error);
+          }
+        });
+
+      function createResultsTable(results) {
+        if (!results || results.length === 0)
+          return "<p>No results to display</p>";
+
+        const keys = Object.keys(results[0]);
+
+        let html = "<table><thead><tr>";
+        keys.forEach((key) => {
+          html += `<th>${key.replace(/_/g, " ").toUpperCase()}</th>`;
+        });
+        html += "</tr></thead><tbody>";
+
+        results.forEach((row) => {
+          html += "<tr>";
+          keys.forEach((key) => {
+            let value = row[key];
+            let className = "";
+
+            if (key === "prediction") {
+              className =
+                value === "Confirmed Exoplanet"
+                  ? "exoplanet"
+                  : "false-positive";
+            }
+
+            if (typeof value === "number") {
+              value = value.toFixed(4);
+            }
+
+            html += `<td class="${className}">${value}</td>`;
+          });
+          html += "</tr>";
+        });
+
+        html += "</tbody></table>";
+        return html;
+      }
+
+      async function downloadResults() {
+        if (!batchResults) return;
+
+        try {
+          const response = await fetch("/download_results", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(batchResults),
+          });
+
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "exoplanet_predictions.csv";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        } catch (error) {
+          alert("Error downloading results: " + error);
+        }
+      }
+
+      async function loadHistory() {
+        try {
+          const response = await fetch("/history");
+          const data = await response.json();
+
+          const historyContent = document.getElementById("historyContent");
+
+          if (!data.history || data.history.length === 0) {
+            historyContent.innerHTML =
+              '<p style="text-align: center; opacity: 0.7;">No predictions in history yet</p>';
+            return;
+          }
+
+          let html = "";
+          data.history.reverse().forEach((item, index) => {
+            const isPlanet =
+              item.prediction && item.prediction.includes("Exoplanet");
+            const badgeClass = isPlanet ? "badge-success" : "badge-danger";
+
+            html += `
+                        <div class="history-item">
+                            <div class="timestamp">${
+                              item.timestamp || "Unknown time"
+                            }</div>
+                            <p><strong>Prediction:</strong> ${
+                              item.prediction || "N/A"
+                            } 
+                               <span class="badge ${badgeClass}">${
+              item.confidence || "N/A"
+            }</span></p>
+                            <p><strong>Model:</strong> ${
+                              item.model_used || "Unknown"
+                            }</p>
+                        </div>
+                    `;
+          });
+
+          historyContent.innerHTML = html;
+        } catch (error) {
+          alert("Error loading history: " + error);
+        }
+      }
+
+      async function exportHistory() {
+        try {
+          window.location.href = "/export_history";
+        } catch (error) {
+          alert("Error exporting history: " + error);
+        }
+      }
+
+      async function clearHistoryConfirm() {
+        if (
+          !confirm(
+            "Are you sure you want to clear all prediction history? This cannot be undone."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch("/clear_history", {
+            method: "POST",
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert("History cleared successfully!");
+            loadHistory();
+          }
+        } catch (error) {
+          alert("Error clearing history: " + error);
+        }
+      }
+
+      async function saveCurrentPrediction() {
+        if (!currentPrediction) return;
+
+        try {
+          const response = await fetch("/save_single", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(currentPrediction),
+          });
+
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "exoplanet_prediction.json";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        } catch (error) {
+          alert("Error saving prediction: " + error);
+        }
+      }
     </script>
   </body>
 </html>
