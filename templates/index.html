@@ -1573,6 +1573,18 @@
     cursor: not-allowed;
   }
 
+  .voice-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--success);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
   .typing-indicator {
     display: flex;
     gap: 4px;
@@ -1780,6 +1792,37 @@
   function updateChatContext(predictionResult) {
     currentContext = predictionResult;
     loadSuggestions();
+  }
+  let recognition = null;
+
+  if ('webkitSpeechRecognition' in window) {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      chatInput.value = transcript;
+      sendMessage();
+    };
+    
+    // Add voice button to chat
+    const voiceBtn = document.createElement('button');
+    voiceBtn.innerHTML = '🎤';
+    voiceBtn.className = 'voice-btn';
+    voiceBtn.onclick = function() {
+      if (recognition) {
+        recognition.start();
+        voiceBtn.innerHTML = '🔴';
+        setTimeout(() => voiceBtn.innerHTML = '🎤', 3000);
+      }
+    };
+    
+    document.querySelector('.chat-input-container').insertBefore(
+      voiceBtn, 
+      document.getElementById('chatSend')
+    );
   }
 </script>
   </body>
