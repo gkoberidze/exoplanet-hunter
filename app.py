@@ -1,15 +1,18 @@
-from flask import Flask, render_template, request, jsonify, send_file
-import joblib
-import numpy as np
-import json
-import os
-from werkzeug.utils import secure_filename
-import pandas as pd
-from upload_handler import allowed_file, process_uploaded_csv
+from io import BytesIO
+from save_handler import save_prediction_to_history, load_prediction_history, clear_prediction_history, export_history_to_csv
+from chat_handler import generate_chat_response, get_suggested_questions
 from explanations import (get_feature_explanation, get_prediction_insight,
                           get_exoplanet_facts, compare_to_solar_system)
-from save_handler import save_prediction_to_history, load_prediction_history, clear_prediction_history, export_history_to_csv
-from io import BytesIO
+from upload_handler import allowed_file, process_uploaded_csv
+import pandas as pd
+from werkzeug.utils import secure_filename
+import os
+import json
+import numpy as np
+import joblib
+from flask import Flask, render_template, request, jsonify, send_file
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -272,6 +275,44 @@ def learn():
 def model_info():
     """Get information about all models"""
     return jsonify(model_results)
+
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    """Handle chat messages"""
+    try:
+        data = request.json
+        user_message = data.get('message', '')
+        context = data.get('context', None)
+
+        if not user_message:
+            return jsonify({'error': 'No message provided'}), 400
+
+        # Generate AI response
+        response = generate_chat_response(user_message, context)
+
+        # Get suggested follow-up questions
+        suggestions = get_suggested_questions(context)
+
+        return jsonify({
+            'response': response,
+            'suggestions': suggestions
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/chat/suggestions', methods=['POST'])
+def chat_suggestions():
+    """Get suggested questions based on current context"""
+    try:
+        data = request.json
+        context = data.get('context', None)
+        suggestions = get_suggested_questions(context)
+        return jsonify({'suggestions': suggestions})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
