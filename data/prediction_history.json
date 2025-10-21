@@ -1,0 +1,51 @@
+[
+  {
+    "prediction": "Confirmed Exoplanet! \ud83e\ude90",
+    "confidence": "96.82%",
+    "probability_false": "3.18%",
+    "probability_confirmed": "96.82%",
+    "model_used": "Best Model",
+    "feature_importance": {
+      "koi_score": 0.8282377123832703,
+      "koi_prad": 0.03990248963236809,
+      "planet_star_radius_ratio": 0.014277404174208641,
+      "duration_period_ratio": 0.014054345898330212,
+      "koi_teq": 0.013988330960273743
+    },
+    "input_values": {
+      "koi_period": 2.26,
+      "koi_depth": 615.8,
+      "koi_duration": 2.9575,
+      "koi_prad": 2.26,
+      "koi_teq": 793.0,
+      "koi_steff": 5455.0,
+      "koi_srad": 0.927,
+      "koi_slogg": 4.467,
+      "koi_insol": 93.59,
+      "koi_model_snr": 35.8,
+      "koi_impact": 0.146,
+      "koi_kepmag": 15.347,
+      "koi_score": 1.0,
+      "planet_star_radius_ratio": 0.927,
+      "duration_period_ratio": 9.48
+    },
+    "insights": {
+      "classification": "Confirmed Exoplanet",
+      "confidence_level": "Very High",
+      "key_indicators": [
+        "Short orbital period (2.26 days) - suggests close proximity to star",
+        "Planet type: Neptune-like (radius: 2.26 Earth radii)",
+        "Temperature: 793K"
+      ],
+      "similar_exoplanets": [],
+      "recommendations": [
+        "This candidate shows strong exoplanet characteristics",
+        "Follow-up observations recommended for confirmation"
+      ]
+    },
+    "solar_system_comparison": [
+      "Similar orbital period to Mercury (88 days)"
+    ],
+    "timestamp": "2025-10-19 14:24:55"
+  }
+]
