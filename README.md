@@ -139,4 +139,3 @@ Open Science: Transparent methodology supports reproducible research
 
 
 Built for: NASA Space Apps Challenge 2025
-Mission: Making exoplanet discovery accessible, educational, and efficient through AI
