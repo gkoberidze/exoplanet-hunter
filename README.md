@@ -1,9 +1,15 @@
-Exoplanet Hunter AI - Project Description
-🌟 Overview
+Exoplanet Hunter AI
+
+Overview
+
 Exoplanet Hunter AI is an intelligent web application that harnesses the power of machine learning to detect and classify exoplanets from NASA's Kepler Space Telescope mission data. By analyzing planetary and stellar parameters, the system predicts whether a celestial object is a confirmed exoplanet or a false positive, helping astronomers prioritize candidates for follow-up observations.
-🎯 Problem Statement
+
+Problem Statement
+
 The search for exoplanets generates massive amounts of data that require extensive manual analysis. NASA's Kepler mission alone monitored 150,000+ stars and identified thousands of potential planetary candidates. However, distinguishing genuine exoplanets from false positives (binary stars, starspots, or instrumental noise) is time-consuming and requires expert knowledge. Many promising candidates remain unverified due to limited resources and analysis capacity.
-💡 Our Solution
+
+Our Solution
+
 Exoplanet Hunter AI democratizes exoplanet detection by:
 
 Automating Classification: AI models analyze 15+ planetary parameters in seconds, achieving 87-89% accuracy
@@ -12,7 +18,8 @@ Batch Processing: Analyze hundreds of candidates simultaneously via CSV upload
 Educational Insights: Interactive AI assistant explains predictions, compares to our solar system, and teaches astronomy concepts
 Transparency: Feature importance analysis shows which parameters drove each classification decision
 
-✨ Key Features
+Key Features
+
 1. Multi-Model AI Engine
 
 Three advanced ML models: Random Forest, XGBoost, and Neural Network
@@ -34,7 +41,7 @@ Automatic validation of required columns
 Summary statistics: confirmed vs. false positive counts, average confidence
 Downloadable results as CSV for further research
 
-4. Conversational AI Assistant 🤖
+4. Conversational AI Assistant 
 
 Real-time Q&A about exoplanets, predictions, and space science
 Context-aware responses based on current prediction results
@@ -62,7 +69,8 @@ Dark/light theme toggle
 Feature explanations (what each parameter measures)
 Exoplanet facts and discovery insights
 
-🛠️ Technologies Used
+Technologies Used
+
 Backend
 
 Python 3.x: Core programming language
@@ -105,7 +113,7 @@ NASA Kepler Dataset: 7,326 labeled samples
 Feature Engineering: 15 parameters including derived features
 CSV Processing: Batch upload handler with validation
 
-📊 Dataset & Performance
+Dataset & Performance
 
 Source: NASA Kepler Space Telescope Mission Data
 Training Samples: 7,326 confirmed exoplanets and false positives
@@ -114,7 +122,7 @@ Best Model Accuracy: 89.2%
 ROC AUC Score: 0.97
 Processing Speed: <1 second per prediction
 
-🎓 Educational Impact
+Educational Impact
 The conversational AI makes space science accessible to:
 
 Students: Learn about exoplanet detection methods interactively
@@ -122,14 +130,14 @@ Educators: Demonstrate real-world ML applications in astronomy
 Amateur Astronomers: Understand what makes planets detectable
 Researchers: Quick validation tool for candidate screening
 
-🚀 Use Cases
+Use Cases
 
 Astronomical Research: Pre-screen Kepler candidates before expensive telescope time
 Citizen Science: Enable non-experts to contribute to exoplanet discovery
 Education: Interactive teaching tool for ML and astronomy courses
 Data Exploration: Analyze historical Kepler data with modern AI techniques
 
-🏆 Innovation Highlights
+Innovation Highlights
 
 Hybrid Approach: Combines three ML algorithms for robust predictions
 Explainable AI: Feature importance and confidence scores build trust
