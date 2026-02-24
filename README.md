@@ -1,14 +1,8 @@
 Exoplanet Hunter AI
 
-Overview
-
 Exoplanet Hunter AI is an intelligent web application that harnesses the power of machine learning to detect and classify exoplanets from NASA's Kepler Space Telescope mission data. By analyzing planetary and stellar parameters, the system predicts whether a celestial object is a confirmed exoplanet or a false positive, helping astronomers prioritize candidates for follow-up observations.
 
-Problem Statement
-
 The search for exoplanets generates massive amounts of data that require extensive manual analysis. NASA's Kepler mission alone monitored 150,000+ stars and identified thousands of potential planetary candidates. However, distinguishing genuine exoplanets from false positives (binary stars, starspots, or instrumental noise) is time-consuming and requires expert knowledge. Many promising candidates remain unverified due to limited resources and analysis capacity.
-
-Our Solution
 
 Exoplanet Hunter AI democratizes exoplanet detection by:
 
